@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scene English</title>
+<meta name="theme-color" content="#0e1116">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* 한 가지 세계: 어두운 상영관. 자막색(앰버)이 강조색, 내 차례는 스틸 블루. 위→아래: 스크린, 조작부, 차례 패널, 단어·대본 */
+  --ink:#0e1116;
+  --panel:#161a21;
+  --panel2:#1d222b;
+  --line:#2a303b;
+  --text:#ece7dc;
+  --muted:#939aa6;
+  --sub:#f3c45d;
+  --you:#80b6e8;
+  --good:#6cc28a;
+  --warn:#e8a54b;
+  --bad:#e36b60;
+  --display:'Bebas Neue', Impact, 'Arial Narrow', sans-serif;
+  --body:'Noto Sans KR', system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ink);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.55}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--sub);outline-offset:2px}
+[hidden]{display:none !important}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:rgba(14,17,22,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:56px}
+.brand{background:none;border:0;padding:0;font-family:var(--display);font-size:28px;letter-spacing:1px;color:var(--text)}
+.brand span{color:var(--sub);margin-left:6px}
+.nav{display:flex;gap:4px}
+.nav button{background:none;border:1px solid transparent;border-radius:999px;padding:6px 14px;color:var(--muted)}
+.nav button[aria-current="true"]{color:var(--text);border-color:var(--line);background:var(--panel)}
+.nav b{display:inline-block;min-width:20px;margin-left:4px;padding:0 6px;border-radius:999px;background:var(--sub);color:#1a1405;font-size:12px;font-weight:700;text-align:center}
+
+main{padding:24px 0 80px}
+h1,h2,h3{margin:0;text-wrap:balance}
+.eyebrow{font-size:13px;color:var(--muted);letter-spacing:.02em}
+
+/* home */
+.intro{display:grid;gap:10px;margin-bottom:24px}
+.intro h1{font-family:var(--display);font-weight:400;font-size:clamp(40px,6vw,64px);line-height:1;letter-spacing:1px}
+.intro h1 em{font-style:normal;color:var(--sub)}
+.intro p{margin:0;max-width:62ch;color:var(--muted)}
+.steps{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.steps span{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:14px;background:var(--panel)}
+.steps b{color:var(--sub);font-weight:700;margin-right:6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{display:grid;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;padding:0;transition:border-color .15s, transform .15s}
+.card:hover{border-color:#4a5262;transform:translateY(-2px)}
+.card .thumb{aspect-ratio:2.35/1;background:#000}
+.card .thumb svg{width:100%;height:100%;display:block}
+.card .body{padding:14px 16px 16px;display:grid;gap:6px}
+.card h3{font-family:var(--display);font-weight:400;font-size:30px;letter-spacing:.5px;line-height:1}
+.card .ko{color:var(--muted);font-size:14px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
+.pips{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.pip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:6px;border:1px solid var(--line)}
+.pip.done{border-color:rgba(108,194,138,.5);color:var(--good)}
+.note{margin-top:22px;padding:14px 16px;border-radius:12px;border:1px dashed var(--line);color:var(--muted);font-size:14px;display:grid;gap:4px}
+.note b{color:var(--text)}
+
+/* play */
+.play-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.play-head h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,5vw,48px);line-height:1;letter-spacing:.5px}
+.back{background:none;border:0;color:var(--muted);padding:0 0 6px}
+.back:hover{color:var(--text)}
+.frame{position:relative;border-radius:14px;overflow:hidden;background:#000;border:1px solid var(--line)}
+.art{aspect-ratio:2.35/1}
+.art svg{width:100%;height:100%;display:block}
+.lineno{position:absolute;top:12px;left:14px;font-size:12px;color:rgba(255,255,255,.7);font-variant-numeric:tabular-nums;background:rgba(0,0,0,.45);padding:2px 8px;border-radius:6px}
+.subtitle{position:absolute;left:0;right:0;bottom:0;padding:40px 6% 18px;text-align:center;background:linear-gradient(transparent,rgba(0,0,0,.78) 45%);display:grid;gap:4px;justify-items:center}
+.sp{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.65)}
+.sp .you{color:var(--you);font-weight:700}
+.en{font-size:clamp(17px,2.3vw,25px);font-weight:500;color:#fff;text-shadow:0 1px 3px #000;line-height:1.4;max-width:46ch}
+.kor{font-size:clamp(14px,1.7vw,18px);color:var(--sub);text-shadow:0 1px 3px #000}
+.ghost{font-size:15px;color:rgba(255,255,255,.55);font-style:italic}
+.vw{border-bottom:2px dotted var(--sub);cursor:pointer;border-radius:2px}
+.vw:hover{background:rgba(243,196,93,.18)}
+@media (max-width:640px){
+  .subtitle{position:static;background:#000;padding:12px 14px 14px}
+}
+
+.controls{display:flex;flex-wrap:wrap;gap:14px 22px;margin:16px 0}
+.ctl{display:grid;gap:6px}
+.lbl{font-size:12px;color:var(--muted)}
+.seg{display:inline-flex;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{background:none;border:0;border-radius:8px;padding:6px 12px;color:var(--muted);font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--panel2);color:var(--text);box-shadow:inset 0 0 0 1px #3a4250}
+.seg button b{color:var(--sub);margin-right:4px}
+
+.turn{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:14px}
+.turn.mine{border-color:rgba(128,182,232,.55)}
+.turn-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.who{font-weight:700}
+.who small{font-weight:400;color:var(--muted);margin-left:6px}
+.who.you{color:var(--you)}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:9px 14px;font-size:15px}
+.btn:hover{border-color:#4a5262}
+.btn.primary{background:var(--sub);border-color:var(--sub);color:#1c1504;font-weight:700}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.blue{background:var(--you);border-color:var(--you);color:#0b1724;font-weight:700}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.say{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+.mic{width:76px;height:76px;border-radius:50%;border:0;background:var(--you);color:#0b1724;font-weight:700;font-size:14px;display:grid;place-items:center;box-shadow:0 0 0 6px rgba(128,182,232,.15)}
+.mic.on{background:var(--bad);color:#fff;animation:pulse 1.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(227,107,96,.6)}100%{box-shadow:0 0 0 18px rgba(227,107,96,0)}}
+@media (prefers-reduced-motion:reduce){.mic.on{animation:none}.card{transition:none}}
+.say > div{min-width:0}
+.nav button{white-space:nowrap}
+@media (max-width:480px){.top .wrap{padding:0 12px}.brand{font-size:18px;letter-spacing:.5px}.nav{gap:0}.nav button{padding:5px 6px;font-size:14px}.mic{width:64px;height:64px}.typebox .btn{padding:9px 10px}}
+.typebox{display:flex;gap:8px}
+.setgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:800px){.setgrid{grid-template-columns:1fr}}
+.typebox input{flex:1;min-width:0;background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.live{min-height:24px;color:var(--muted);font-style:italic}
+.hintline{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;color:var(--sub);font-size:15px}
+.small{font-size:13px;color:var(--muted)}
+.warn{color:var(--warn)}
+.result{display:grid;gap:10px}
+.scorebox{display:flex;align-items:center;gap:14px}
+.score{font-family:var(--display);font-size:52px;line-height:.9;font-variant-numeric:tabular-nums}
+.score.g{color:var(--good)}.score.w{color:var(--warn)}.score.b{color:var(--bad)}
+.sent{font-size:19px;line-height:1.7}
+.w-ok{color:var(--good)}
+.w-near{color:var(--warn);border-bottom:2px solid var(--warn)}
+.w-miss{color:var(--bad);text-decoration:underline wavy var(--bad);text-underline-offset:4px}
+.tips{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px}
+.coach{white-space:pre-wrap;background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:14px}
+.summary{display:grid;gap:8px}
+.summary ol{margin:0;padding-left:20px;display:grid;gap:4px;font-size:14px}
+.summary .num{font-variant-numeric:tabular-nums;font-weight:700}
+
+.lower{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+@media (max-width:800px){.lower{grid-template-columns:1fr}}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:12px;align-content:start}
+.box h2{font-size:16px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--panel2);border-radius:999px;padding:5px 12px;font-size:14px}
+.chip.saved{border-color:rgba(243,196,93,.6)}
+.chip small{color:var(--muted);margin-left:6px}
+.script{margin:0;padding-left:22px;display:grid;gap:8px;font-size:14px}
+.script li.cur{color:var(--sub)}
+.script li .k{color:var(--muted);display:block}
+.script li .s{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+details summary{cursor:pointer;font-weight:700}
+details[open] summary{margin-bottom:10px}
+
+/* chat */
+.chat{display:grid;gap:12px}
+.msgs{display:grid;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;min-height:300px;align-content:start}
+.msg{max-width:85%;display:grid;gap:4px;padding:10px 14px;border-radius:12px}
+.msg.ai{background:var(--panel2);border:1px solid var(--line);justify-self:start}
+.msg.me{background:rgba(128,182,232,.14);border:1px solid rgba(128,182,232,.4);justify-self:end}
+.msg .nm{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.msg .e{font-size:17px}
+.msg .e.blur{filter:blur(6px);cursor:pointer;user-select:none}
+.msg .k{color:var(--sub);font-size:14px}
+.msg .fb{font-size:13px;color:var(--warn)}
+.msg .bt{font-size:13px;color:var(--good)}
+.msg .mini{justify-self:start;background:none;border:0;color:var(--muted);font-size:13px;padding:0}
+.typing{color:var(--muted);font-style:italic}
+
+/* words */
+.wtools{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.wtools label{display:flex;gap:8px;align-items:center;color:var(--muted)}
+.wlist{display:grid;gap:10px}
+.wrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.wrow .w{font-size:18px;font-weight:700}
+.wrow .i{color:var(--muted);font-size:14px;margin-left:8px;font-weight:400}
+.wrow .m{color:var(--sub)}
+.wrow .m.hide{filter:blur(6px);cursor:pointer;user-select:none}
+.wrow .x{font-size:13px;color:var(--muted)}
+.empty{color:var(--muted);padding:30px 0}
+
+/* sheet */
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;padding:0 12px 12px;pointer-events:none}
+.sheet-card{pointer-events:auto;width:100%;max-width:520px;background:#20252f;border:1px solid #3a4250;border-radius:16px;padding:16px 18px;display:grid;gap:8px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.sh-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.sh-word{font-size:24px;font-weight:700}
+.sh-ipa{color:var(--muted)}
+.sh-ko{font-size:18px;color:var(--sub)}
+.sh-ex{font-size:14px;color:var(--muted)}
+.sh-x{background:none;border:0;color:var(--muted);font-size:20px;line-height:1;padding:4px}
+.toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:#2a303b;border:1px solid #3a4250;padding:8px 14px;border-radius:10px;z-index:60;font-size:14px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <button class="brand" data-act="home" aria-label="처음 화면">SCENE<span>ENGLISH</span></button>
+  <nav class="nav">
+    <button data-act="home" id="navHome" aria-current="true">장면</button>
+    <button data-act="words" id="navWords" aria-current="false">단어장<b id="wcount">0</b></button>
+    <button data-act="settings" id="navSet" aria-current="false">설정</button>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <!-- HOME -->
+  <section id="vHome">
+    <div class="intro">
+      <p class="eyebrow">영화 장면으로 하는 영어 말하기 연습</p>
+      <h1>Say the line. <em>Own the scene.</em></h1>
+      <p>장면을 고르고 한 인물의 역할을 맡으세요. 상대 배역은 영어 음성으로 대사를 읽어 주고, 내 차례가 오면 대사를 말하거나 입력하면 됩니다. 같은 장면을 세 단계로 반복하면서 자막 없이도 말할 수 있게 연습해요.</p>
+      <div class="steps">
+        <span><b>1</b>영어 + 한글 자막</span>
+        <span><b>2</b>한글 자막만</span>
+        <span><b>3</b>자막 없이</span>
+      </div>
+    </div>
+    <div class="cards" id="cards"></div>
+    <div class="note" id="envNote"></div>
+  </section>
+
+  <!-- PLAY -->
+  <section id="vPlay" hidden>
+    <div class="play-head">
+      <div>
+        <button class="back" data-act="home">← 장면 목록</button>
+        <h1 id="pTitle"></h1>
+        <div class="small" id="pMeta"></div>
+      </div>
+      <button class="btn" id="chatBtn" data-act="chat">AI와 자유 대화</button>
+    </div>
+    <div class="frame">
+      <div class="art" id="art"></div>
+      <div class="lineno" id="lineNo"></div>
+      <div class="subtitle" id="subtitle" aria-live="polite"></div>
+    </div>
+    <div class="controls">
+      <div class="ctl"><span class="lbl">내 역할</span><div class="seg" id="roleSeg"></div></div>
+      <div class="ctl"><span class="lbl">단계</span><div class="seg" id="stageSeg">
+        <button data-stage="1"><b>1</b>영어+한글</button>
+        <button data-stage="2"><b>2</b>한글만</button>
+        <button data-stage="3"><b>3</b>자막 없음</button>
+      </div></div>
+      <div class="ctl"><span class="lbl">음성 속도</span><div class="seg" id="rateSeg">
+        <button data-rate="0.75">느리게</button>
+        <button data-rate="0.92">보통</button>
+        <button data-rate="1.05">빠르게</button>
+      </div></div>
+    </div>
+    <div class="turn" id="turn"></div>
+    <div class="lower">
+      <section class="box">
+        <h2>이 장면의 단어 <span class="small" id="vcount"></span></h2>
+        <div class="chips" id="chips"></div>
+        <p class="small" style="margin:0">자막의 점선 단어나 위 단어를 누르면 뜻과 발음이 나와요.</p>
+      </section>
+      <section class="box">
+        <details id="scriptBox"><summary>전체 대본 보기</summary><ol class="script" id="script"></ol></details>
+        <p class="small" style="margin:0" id="scriptNote">2·3단계에서는 대본을 접어 두고 기억으로 말해 보세요.</p>
+      </section>
+    </div>
+  </section>
+
+  <!-- CHAT -->
+  <section id="vChat" hidden>
+    <div class="play-head">
+      <div>
+        <button class="back" data-act="back-play">← 장면으로</button>
+        <h1 id="cTitle">자유 대화</h1>
+        <div class="small" id="cMeta"></div>
+      </div>
+      <div class="ctl"><span class="lbl">AI 대사 자막</span><div class="seg" id="csubSeg">
+        <button data-csub="both">영어+한글</button>
+        <button data-csub="en">영어만</button>
+        <button data-csub="none">없음</button>
+      </div></div>
+    </div>
+    <div class="chat">
+      <div class="msgs" id="msgs" aria-live="polite"></div>
+      <div class="say" id="chatSay">
+        <button class="mic" id="chatMic" data-act="chat-mic">말하기</button>
+        <form class="typebox" id="chatForm">
+          <label for="chatInput" class="small" hidden>영어로 답하기</label>
+          <input id="chatInput" autocomplete="off" placeholder="영어로 대답해 보세요 (Enter로 보내기)">
+          <button class="btn blue" type="submit">보내기</button>
+        </form>
+      </div>
+      <div class="btns"><button class="btn" data-act="chat-restart">대화 새로 시작</button></div>
+    </div>
+  </section>
+
+  <!-- WORDS -->
+  <section id="vWords" hidden>
+    <div class="wtools">
+      <h1 style="font-family:var(--display);font-weight:400;font-size:44px;letter-spacing:.5px;line-height:1">My Words</h1>
+      <label for="hideMean"><input type="checkbox" id="hideMean"> 뜻 가리고 복습하기</label>
+    </div>
+    <div class="wlist" id="wlist"></div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="vSet" hidden>
+    <h1 style="font-family:var(--display);font-weight:400;font-size:44px;letter-spacing:.5px;line-height:1;margin-bottom:16px">Settings</h1>
+    <div class="setgrid">
+      <section class="box">
+        <h2>이 기기 상태</h2>
+        <ul class="tips" id="envList"></ul>
+        <div class="btns"><button class="btn primary" id="installBtn" data-act="install" hidden>앱으로 설치하기</button><button class="btn" data-act="test-voice">음성 테스트</button><button class="btn" data-act="test-mic">마이크 테스트</button></div>
+        <div class="live" id="micTest"></div>
+      </section>
+      <section class="box" id="keyBox">
+        <h2>AI 연결 (Claude API 키)</h2>
+        <p class="small" style="margin:0">AI 코치와 자유 대화에 쓰여요. 키는 이 기기의 브라우저에만 저장되고 다른 곳으로 보내지지 않아요 (Anthropic 서버로 요청할 때만 사용). PC와 휴대폰에 각각 한 번씩 넣어야 해요.</p>
+        <form id="keyForm" class="typebox"><label for="keyInput" hidden>API 키</label><input id="keyInput" type="password" autocomplete="off" placeholder="sk-ant-로 시작하는 키 붙여넣기"><button class="btn primary" type="submit">저장</button></form>
+        <div class="ctl"><span class="lbl">AI 모델</span><div class="seg" id="modelSeg">
+          <button data-model="claude-haiku-5-5">빠름 (Haiku)</button>
+          <button data-model="claude-sonnet-5-5">더 똑똑함 (Sonnet)</button>
+        </div></div>
+        <div class="small" id="keyStatus"></div>
+        <div class="btns"><button class="btn" data-act="key-test">연결 테스트</button><button class="btn" data-act="key-qr">휴대폰으로 키 보내기 (QR)</button><button class="btn" data-act="key-del">키 삭제</button></div>
+        <div id="qrBox" hidden style="display:grid;gap:8px;justify-items:start"><div id="qr" style="background:#fff;padding:10px;border-radius:8px"></div><div class="small warn">휴대폰 카메라로 찍으면 앱이 열리면서 키가 저장돼요. 다른 사람에게 보여 주지 마세요. 다 쓰면 닫기를 누르세요.</div><button class="btn" data-act="key-qr-close">QR 닫기</button></div>
+      </section>
+    </div>
+  </section>
+</main>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-card" role="dialog" aria-labelledby="shWord">
+    <div class="sh-top">
+      <div><div class="sh-word" id="shWord"></div><div class="sh-ipa" id="shIpa"></div></div>
+      <button class="sh-x" data-act="sheet-close" aria-label="닫기">✕</button>
+    </div>
+    <div class="sh-ko" id="shKo"></div>
+    <div class="sh-ex" id="shEx"></div>
+    <div class="btns"><button class="btn" data-act="sheet-speak">발음 듣기</button><button class="btn primary" id="shSave" data-act="sheet-save">단어장에 추가</button></div>
+  </div>
+</div>
+
+<script>
+/* ===================== DATA ===================== */
+const VOCAB = {
+  "that's the point": {ipa:"/ðæts ðə pɔɪnt/", ko:"바로 그게 목적이야, 그러려고 그런 거야"},
+  "warehouse": {ipa:"/ˈwer.haʊs/", ko:"창고"},
+  "burn down": {ipa:"/bɜːrn daʊn/", ko:"(건물이) 다 타 버리다, 전소되다"},
+  "be behind": {ipa:"/bi bɪˈhaɪnd/", ko:"~의 배후에 있다"},
+  "suspect": {ipa:"/səˈspekt/", ko:"(동사) 의심하다 · (명사 /ˈsʌs.pekt/) 용의자"},
+  "mayor": {ipa:"/ˈmeɪ.ər/", ko:"시장(市長)"},
+  "block": {ipa:"/blɑːk/", ko:"막다, 차단하다"},
+  "investigation": {ipa:"/ɪnˌves.təˈɡeɪ.ʃən/", ko:"수사, 조사"},
+  "truth": {ipa:"/truːθ/", ko:"진실"},
+  "alone": {ipa:"/əˈloʊn/", ko:"혼자, 홀로"},
+  "have nothing to hide": {ipa:"/hæv ˈnʌθ.ɪŋ tə haɪd/", ko:"숨길 게 없다"},
+  "around": {ipa:"/əˈraʊnd/", ko:"(시간·수) ~쯤, 대략"},
+  "unfortunately": {ipa:"/ʌnˈfɔːr.tʃən.ət.li/", ko:"유감스럽게도, 안타깝게도"},
+  "witness": {ipa:"/ˈwɪt.nəs/", ko:"목격자, 증인"},
+  "harbor": {ipa:"/ˈhɑːr.bər/", ko:"항구"},
+  "sedan": {ipa:"/sɪˈdæn/", ko:"세단(4도어 승용차)"},
+  "license plate": {ipa:"/ˈlaɪ.səns pleɪt/", ko:"(자동차) 번호판"},
+  "lawyer": {ipa:"/ˈlɔɪ.ər/", ko:"변호사"},
+  "take your time": {ipa:"/teɪk jʊr taɪm/", ko:"천천히 하세요, 서두르지 마세요"},
+  "neither": {ipa:"/ˈniː.ðər/", ko:"~도 아니다 (Neither am I = 나도 마찬가지로 아니야)"},
+  "apparently": {ipa:"/əˈper.ənt.li/", ko:"보아하니, 듣자 하니"},
+  "review": {ipa:"/rɪˈvjuː/", ko:"검토하다 · 검토"},
+  "proposal": {ipa:"/prəˈpoʊ.zəl/", ko:"제안(서)"},
+  "frankly": {ipa:"/ˈfræŋk.li/", ko:"솔직히 말해서"},
+  "add up": {ipa:"/æd ʌp/", ko:"(숫자·이야기가) 앞뒤가 맞다"},
+  "revenue": {ipa:"/ˈrev.ə.nuː/", ko:"매출, 수익"},
+  "quarter": {ipa:"/ˈkwɔːr.t̬ər/", ko:"분기 (3개월)"},
+  "solid": {ipa:"/ˈsɑː.lɪd/", ko:"탄탄한, 확실한"},
+  "expense": {ipa:"/ɪkˈspens/", ko:"비용, 지출"},
+  "expand": {ipa:"/ɪkˈspænd/", ko:"확장하다, 진출하다"},
+  "expansion": {ipa:"/ɪkˈspæn.ʃən/", ko:"확장"},
+  "risky": {ipa:"/ˈrɪs.ki/", ko:"위험한"},
+  "guarantee": {ipa:"/ˌɡer.ənˈtiː/", ko:"보장, 보증 · 보장하다"},
+  "board": {ipa:"/bɔːrd/", ko:"이사회 (a seat on the board = 이사 자리)"},
+  "access": {ipa:"/ˈæk.ses/", ko:"접근(권), 열람 권한"},
+  "financial records": {ipa:"/faɪˈnæn.ʃəl ˈrek.ərdz/", ko:"재무 기록"},
+  "deadline": {ipa:"/ˈded.laɪn/", ko:"마감 기한"},
+  "deal": {ipa:"/diːl/", ko:"거래, 계약"},
+  "off the table": {ipa:"/ɔːf ðə ˈteɪ.bəl/", ko:"(제안이) 철회된, 더는 논의하지 않는"},
+  "drive a hard bargain": {ipa:"/draɪv ə hɑːrd ˈbɑːr.ɡən/", ko:"(협상에서) 깐깐하게 굴다, 쉽게 양보하지 않다"}
+};
+
+const SCENES = [
+  {
+    id:"rooftop", art:"rooftop", title:"Rooftop at Midnight", ko:"자정의 옥상",
+    genre:"범죄 스릴러", level:"중급",
+    place:"Midnight. A rooftop above the city.", placeKo:"자정, 도시 위 어느 옥상",
+    setting:"A rainy city at midnight. On a rooftop, police detective Mara Cole meets a masked vigilante called Shade. She wants his help with a string of warehouse fires, and the mayor's office keeps blocking her investigation.",
+    roles:[
+      {name:"Mara Cole", ko:"형사 마라 콜", g:"f", pitch:1.05, desc:"a determined police detective"},
+      {name:"Shade", ko:"자경단원 셰이드", g:"m", pitch:0.8, desc:"a mysterious masked vigilante who speaks in short, cool sentences"}
+    ],
+    lines:[
+      {r:0, en:"You're a hard man to find.", ko:"당신, 정말 찾기 힘든 사람이군요."},
+      {r:1, en:"[That's the point|that's the point]. Why are you here, Detective?", ko:"그러려고 그런 거야. 여긴 왜 왔지, 형사?"},
+      {r:0, en:"Three [warehouses|warehouse] [burned down|burn down] this week. I need to know who's [behind|be behind] it.", ko:"이번 주에 창고 세 곳이 불탔어요. 누가 배후인지 알아야 해요."},
+      {r:1, en:"You already [suspect] someone. I can see it in your eyes.", ko:"이미 누군가를 의심하고 있군. 눈에 다 보여."},
+      {r:0, en:"The [mayor]'s office keeps [blocking|block] my [investigation].", ko:"시장실이 계속 제 수사를 막고 있어요."},
+      {r:1, en:"Then you're closer to the [truth] than you think.", ko:"그렇다면 생각보다 진실에 가까이 와 있는 거다."},
+      {r:0, en:"I can't do this [alone]. Will you help me or not?", ko:"혼자서는 못 해요. 도와줄 거예요, 말 거예요?"},
+      {r:1, en:"I don't work with the police. But I'll be watching.", ko:"난 경찰과 일하지 않아. 하지만 지켜보고 있겠다."},
+      {r:0, en:"That's not an answer.", ko:"그건 대답이 아니잖아요."},
+      {r:1, en:"It's the only one you're going to get.", ko:"네가 들을 수 있는 대답은 그것뿐이다."}
+    ]
+  },
+  {
+    id:"interrogation", art:"interrogation", title:"The Interrogation", ko:"심문실",
+    genre:"범죄 드라마", level:"중급",
+    place:"Late night. Interrogation Room 2.", placeKo:"늦은 밤, 2번 심문실",
+    setting:"A police interrogation room late at night. Detective Ray Holt questions businessman Vincent Graves about something that happened at the harbor on Friday night. Graves is calm, polite and a little smug.",
+    roles:[
+      {name:"Ray Holt", ko:"형사 레이 홀트", g:"m", pitch:0.95, desc:"a patient, sharp police detective"},
+      {name:"Vincent Graves", ko:"사업가 빈센트 그레이브스", g:"m", pitch:0.75, desc:"a calm, polite and slightly smug businessman under suspicion"}
+    ],
+    lines:[
+      {r:0, en:"Sit down, Mr. Graves. We have a few questions for you.", ko:"앉으시죠, 그레이브스 씨. 몇 가지 여쭤볼 게 있습니다."},
+      {r:1, en:"Of course. I [have nothing to hide|have nothing to hide].", ko:"물론이죠. 전 숨길 게 없으니까요."},
+      {r:0, en:"Where were you on Friday night, [around] eleven?", ko:"금요일 밤 11시쯤 어디 계셨습니까?"},
+      {r:1, en:"At home, reading a book. Alone, [unfortunately].", ko:"집에서 책을 읽고 있었죠. 안타깝게도 혼자서요."},
+      {r:0, en:"Funny. A [witness] saw your car near the [harbor].", ko:"재밌군요. 목격자가 항구 근처에서 당신 차를 봤다던데요."},
+      {r:1, en:"Lots of people drive black [sedans|sedan], Detective.", ko:"검은 세단 모는 사람은 많아요, 형사님."},
+      {r:0, en:"Not many of them have a [license plate] that says GRAVES.", ko:"그중에 번호판에 GRAVES라고 적힌 차는 많지 않죠."},
+      {r:1, en:"I'd like to speak to my [lawyer] now.", ko:"이제 제 변호사와 얘기하고 싶군요."},
+      {r:0, en:"[Take your time|take your time]. We're not going anywhere.", ko:"천천히 하세요. 우린 어디 안 가니까."},
+      {r:1, en:"[Neither] am I, [apparently].", ko:"보아하니 저도 어디 못 가겠군요."}
+    ]
+  },
+  {
+    id:"offer", art:"boardroom", title:"The Final Offer", ko:"마지막 제안",
+    genre:"기업 스릴러", level:"중상급 · 토익 어휘",
+    place:"Sunset. A boardroom on the 40th floor.", placeKo:"해 질 녘, 40층 회의실",
+    setting:"A glass-walled boardroom on the 40th floor at sunset. Investor Daniel Stone is deciding whether to fund CEO Elena Hart's plan to expand her company. It is a tense, polite business negotiation that uses TOEIC-style business vocabulary.",
+    roles:[
+      {name:"Daniel Stone", ko:"투자자 대니얼 스톤", g:"m", pitch:0.9, desc:"a cautious, sharp investor"},
+      {name:"Elena Hart", ko:"CEO 엘레나 하트", g:"f", pitch:1.05, desc:"a confident CEO who negotiates hard"}
+    ],
+    lines:[
+      {r:0, en:"I've [reviewed|review] your [proposal]. [Frankly], the numbers don't [add up].", ko:"제안서 검토했습니다. 솔직히 숫자가 안 맞아요."},
+      {r:1, en:"Our [revenue] grew by thirty percent last [quarter]. The numbers are [solid].", ko:"지난 분기 매출이 30% 늘었어요. 수치는 탄탄합니다."},
+      {r:0, en:"Revenue, yes. But your [expenses|expense] grew even faster.", ko:"매출은 그렇죠. 하지만 비용은 더 빨리 늘었어요."},
+      {r:1, en:"That's because we're [expanding|expand] into three new markets.", ko:"새로운 시장 세 곳으로 진출하고 있기 때문이에요."},
+      {r:0, en:"[Expansion] is [risky]. What [guarantees|guarantee] can you offer?", ko:"확장은 위험하죠. 어떤 보장을 해 줄 수 있습니까?"},
+      {r:1, en:"A seat on our [board], and full [access] to our [financial records].", ko:"이사회 자리 하나, 그리고 재무 기록 전체 열람권이요."},
+      {r:0, en:"Interesting. And the [deadline] for this [deal]?", ko:"흥미롭군요. 이 거래의 마감 기한은요?"},
+      {r:1, en:"Friday at noon. After that, the offer is [off the table].", ko:"금요일 정오요. 그 뒤엔 이 제안은 없던 일이 됩니다."},
+      {r:0, en:"You [drive a hard bargain], Ms. Hart.", ko:"협상 한번 깐깐하게 하시는군요, 하트 대표님."},
+      {r:1, en:"I learned from the best, Mr. Stone.", ko:"최고에게 배웠거든요, 스톤 씨."}
+    ]
+  }
+];
+
+/* ===================== UTIL ===================== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem('se:'+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem('se:'+k, JSON.stringify(v)); }catch(e){} }
+};
+function toast(msg){ const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),1800); }
+
+function parseMarked(src){
+  const parts=[]; const re=/\[([^\]|]+)(?:\|([^\]]+))?\]/g; let last=0, m;
+  while((m=re.exec(src))){ if(m.index>last) parts.push({t:src.slice(last,m.index)}); parts.push({t:m[1], k:(m[2]||m[1]).toLowerCase()}); last=re.lastIndex; }
+  if(last<src.length) parts.push({t:src.slice(last)});
+  return {parts, text:parts.map(p=>p.t).join('')};
+}
+SCENES.forEach(sc=>{
+  sc.vocab=[];
+  sc.lines.forEach(ln=>{ const p=parseMarked(ln.en); ln.parts=p.parts; ln.text=p.text;
+    p.parts.forEach(x=>{ if(x.k){ if(!VOCAB[x.k]) console.warn('missing vocab', x.k); if(!sc.vocab.includes(x.k)) sc.vocab.push(x.k);} }); });
+});
+function enHTML(ln){ return ln.parts.map(p => p.k ? `<span class="vw" data-k="${esc(p.k)}" tabindex="0" role="button">${esc(p.t)}</span>` : esc(p.t)).join(''); }
+function exampleFor(k){ for(const sc of SCENES) for(const ln of sc.lines) if(ln.parts.some(p=>p.k===k)) return ln; return null; }
+
+/* ===================== SCORING ===================== */
+const CONTR = {"i'm":"i am","you're":"you are","we're":"we are","they're":"they are","that's":"that is","it's":"it is","who's":"who is","what's":"what is","there's":"there is","he's":"he is","she's":"she is","don't":"do not","doesn't":"does not","didn't":"did not","can't":"can not","cannot":"can not","won't":"will not","isn't":"is not","aren't":"are not","wasn't":"was not","i'll":"i will","you'll":"you will","we'll":"we will","i've":"i have","you've":"you have","we've":"we have","i'd":"i would","you'd":"you would","let's":"let us","dont":"do not","cant":"can not","im":"i am","youre":"you are","thats":"that is","ive":"i have","didnt":"did not","doesnt":"does not","isnt":"is not","wont":"will not"};
+const SMALL=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+const TENS=['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+function numWords(n){ if(n<20) return SMALL[n]; if(n<100) return TENS[Math.floor(n/10)]+(n%10?' '+SMALL[n%10]:''); if(n<1000) return SMALL[Math.floor(n/100)]+' hundred'+(n%100?' '+numWords(n%100):''); return String(n); }
+function norm(s){
+  s=String(s).toLowerCase().replace(/[’‘`]/g,"'").replace(/%/g,' percent ').replace(/\d+/g, m=>' '+numWords(+m)+' ');
+  s=s.replace(/[^a-z0-9'\s]/g,' ');
+  const out=[];
+  s.split(/\s+/).forEach(w=>{ w=w.replace(/^'+|'+$/g,''); if(!w) return;
+    if(CONTR[w]) out.push(...CONTR[w].split(' '));
+    else if(w==='mister') out.push('mr');
+    else if(w==='miss'||w==='mrs'||w==='mz') out.push('ms');
+    else out.push(w); });
+  return out;
+}
+function lev(a,b){ const m=a.length,n=b.length; const d=Array.from({length:m+1},(_,i)=>[i]); for(let j=1;j<=n;j++) d[0][j]=j;
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++) d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1)); return d[m][n]; }
+function sim(a,b){ if(a===b) return 1; if(a.length>=4){ const L=lev(a,b); if(L<=1) return 0.6; if(a.length>=7&&L<=2) return 0.5; } return 0; }
+function align(T,H){
+  const n=T.length,m=H.length; const dp=Array.from({length:n+1},()=>new Array(m+1).fill(0));
+  for(let i=1;i<=n;i++) for(let j=1;j<=m;j++){ const s=sim(T[i-1],H[j-1]); dp[i][j]=Math.max(dp[i-1][j],dp[i][j-1], s>0?dp[i-1][j-1]+s:-1); }
+  const seq=[]; let i=n,j=m;
+  while(i>0||j>0){
+    if(i>0&&j>0){ const s=sim(T[i-1],H[j-1]); if(s>0 && Math.abs(dp[i][j]-(dp[i-1][j-1]+s))<1e-9){ seq.push({ti:i-1,hj:j-1,s}); i--; j--; continue; } }
+    if(i>0 && (j===0 || dp[i][j]===dp[i-1][j])){ seq.push({ti:i-1,hj:null,s:0}); i--; }
+    else { seq.push({ti:null,hj:j-1,s:0}); j--; }
+  }
+  seq.reverse();
+  return {seq, total:dp[n][m]};
+}
+function evaluate(target, alts){
+  const words=target.split(/\s+/).filter(Boolean);
+  const toks=[]; words.forEach((w,wi)=>norm(w).forEach(t=>toks.push({t,wi})));
+  const T=toks.map(x=>x.t);
+  let best=null;
+  alts.filter(a=>a&&a.trim()).forEach(heard=>{
+    const H=norm(heard); const a=align(T,H); const score=T.length?Math.round(a.total/T.length*100):0;
+    if(!best||score>best.score) best={score, heard, H, seq:a.seq};
+  });
+  if(!best) return null;
+  const tokStat=new Array(T.length).fill('miss'); const pairs=[];
+  best.seq.forEach(x=>{ if(x.ti!==null&&x.hj!==null){ tokStat[x.ti]= x.s===1?'ok':'near'; if(x.s<1) pairs.push({t:T[x.ti],h:best.H[x.hj]}); } });
+  const rank={miss:0,near:1,ok:2}; const wstat=words.map(()=> 'ok');
+  toks.forEach((x,k)=>{ if(rank[tokStat[k]]<rank[wstat[x.wi]]) wstat[x.wi]=tokStat[k]; });
+  // gaps: runs of unmatched target/heard tokens between matches
+  const gaps=[]; let cur={t:[],h:[]};
+  best.seq.forEach(x=>{ if(x.ti!==null&&x.hj!==null){ if(cur.t.length||cur.h.length) gaps.push(cur); cur={t:[],h:[]}; } else { if(x.ti!==null) cur.t.push(T[x.ti]); if(x.hj!==null) cur.h.push(best.H[x.hj]); } });
+  if(cur.t.length||cur.h.length) gaps.push(cur);
+  return {score:best.score, heard:best.heard, words, wstat, gaps:gaps.filter(g=>g.t.length), pairs};
+}
+window.__test = {evaluate, norm};
+
+/* ===================== ART ===================== */
+function rng(seed){ return ()=>{ seed=(seed*16807)%2147483647; return (seed-1)/2147483646; }; }
+function skyline(r,o){ let x=o.x0||0, out=''; const x1=o.x1||1200;
+  while(x<x1){ const w=(o.minW+r()*(o.maxW-o.minW))|0, h=(o.minH+r()*(o.maxH-o.minH))|0;
+    out+=`<rect x="${x}" y="${o.y-h}" width="${w}" height="${h+2}" fill="${o.fill}"/>`;
+    if(o.win){ for(let wy=o.y-h+10; wy<o.y-8; wy+=14) for(let wx=x+6; wx<x+w-8; wx+=11) if(r()<o.winP) out+=`<rect x="${wx}" y="${wy}" width="5" height="7" fill="${o.win}" opacity="${(0.35+r()*0.65).toFixed(2)}"/>`; }
+    x+=w+((r()*5)|0); }
+  return out; }
+function person(x,y,s,fill,kind){
+  let head;
+  if(kind==='hood') head=`<path d="M${x-13*s} ${y-146*s} Q${x} ${y-192*s} ${x+13*s} ${y-146*s} L${x+10*s} ${y-132*s} L${x-10*s} ${y-132*s} Z" fill="${fill}"/>`;
+  else head=`<circle cx="${x}" cy="${y-148*s}" r="${11*s}" fill="${fill}"/>`;
+  const hat = kind==='hat' ? `<rect x="${x-19*s}" y="${y-158*s}" width="${38*s}" height="${3.5*s}" rx="${1.5*s}" fill="${fill}"/><path d="M${x-11*s} ${y-157*s} L${x-9*s} ${y-171*s} Q${x} ${y-175*s} ${x+9*s} ${y-171*s} L${x+11*s} ${y-157*s} Z" fill="${fill}"/>` : '';
+  const flare = kind==='hood' ? 44 : 27;
+  const body=`<path d="M${x-21*s} ${y-133*s} Q${x} ${y-142*s} ${x+21*s} ${y-133*s} L${x+flare*s} ${y-18*s} L${x+12*s} ${y-14*s} L${x+10*s} ${y} L${x+3*s} ${y} L${x} ${y-55*s} L${x-3*s} ${y} L${x-10*s} ${y} L${x-12*s} ${y-14*s} L${x-flare*s} ${y-18*s} Z" fill="${fill}"/>`;
+  return head+hat+body; }
+function seated(x,y,s,fill){ return `<circle cx="${x}" cy="${y-98*s}" r="${21*s}" fill="${fill}"/><path d="M${x-14*s} ${y-78*s} L${x+14*s} ${y-78*s} Q${x+50*s} ${y-70*s} ${x+54*s} ${y-30*s} L${x+56*s} ${y} L${x-56*s} ${y} L${x-54*s} ${y-30*s} Q${x-50*s} ${y-70*s} ${x-14*s} ${y-78*s} Z" fill="${fill}"/>`; }
+const VIG=`<radialGradient id="vig" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".78"/></radialGradient>`;
+const ART = {
+  rooftop(){ const r=rng(7);
+    return `<svg viewBox="0 0 1200 510" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="달빛 아래 도시 옥상에 선 두 사람의 실루엣">
+<defs><linearGradient id="skyA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#060912"/><stop offset=".55" stop-color="#18203d"/><stop offset="1" stop-color="#3b2c45"/></linearGradient>
+<radialGradient id="glowA"><stop offset="0" stop-color="#fff2cf" stop-opacity=".55"/><stop offset="1" stop-color="#fff2cf" stop-opacity="0"/></radialGradient>${VIG}</defs>
+<rect width="1200" height="510" fill="url(#skyA)"/>
+<circle cx="905" cy="118" r="170" fill="url(#glowA)"/><circle cx="905" cy="118" r="56" fill="#f5e8c8"/><circle cx="890" cy="108" r="9" fill="#e6d6b0" opacity=".6"/><circle cx="922" cy="134" r="6" fill="#e6d6b0" opacity=".5"/>
+${skyline(r,{y:360,minH:60,maxH:190,minW:40,maxW:90,fill:'#141a30',win:'#7f8bb8',winP:.06})}
+${skyline(r,{y:420,minH:40,maxH:150,minW:60,maxW:130,fill:'#0b0f1d',win:'#f3c45d',winP:.13})}
+<path d="M120 300 h70 v-12 h-70 z M135 300 v60 M175 300 v60" stroke="#0b0f1d" stroke-width="5" fill="#0b0f1d"/>
+<rect x="0" y="420" width="1200" height="90" fill="#05070d"/><rect x="0" y="420" width="1200" height="4" fill="#20263a"/>
+${person(420,468,1.35,'#020306','hat')}
+${person(800,468,1.45,'#020306','hood')}
+<path d="M814 268 Q860 330 872 448" stroke="#3a4870" stroke-width="2" fill="none" opacity=".7"/>
+<rect width="1200" height="510" fill="url(#vig)"/></svg>`; },
+  interrogation(){ return `<svg viewBox="0 0 1200 510" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="전등 하나가 비추는 심문실 테이블에 마주 앉은 두 사람">
+<defs><linearGradient id="wallB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c0f11"/><stop offset="1" stop-color="#1b2125"/></linearGradient>
+<linearGradient id="coneB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe3a0" stop-opacity=".42"/><stop offset="1" stop-color="#ffe3a0" stop-opacity="0"/></linearGradient>${VIG}</defs>
+<rect width="1200" height="510" fill="url(#wallB)"/>
+<rect x="760" y="70" width="380" height="190" fill="#0a1114" stroke="#2b353b" stroke-width="6"/><path d="M800 76 L900 76 L790 254 L766 254 Z" fill="#ffffff" opacity=".04"/>
+<rect x="0" y="400" width="1200" height="110" fill="#0d1012"/>
+<line x1="600" y1="0" x2="600" y2="98" stroke="#2a2f33" stroke-width="3"/>
+<path d="M565 122 L635 122 L618 96 L582 96 Z" fill="#30363b"/>
+<polygon points="572,124 628,124 930,440 270,440" fill="url(#coneB)"/>
+<ellipse cx="600" cy="124" rx="26" ry="5" fill="#fff0c4"/>
+${seated(395,345,1.25,'#050607')}
+${seated(805,345,1.25,'#050607')}
+<polygon points="330,330 870,330 925,372 275,372" fill="#3a3229"/><rect x="275" y="372" width="650" height="14" fill="#1c1813"/>
+<rect x="300" y="386" width="12" height="80" fill="#141210"/><rect x="888" y="386" width="12" height="80" fill="#141210"/>
+<polygon points="520,336 610,336 618,350 512,350" fill="#c9b48a" opacity=".8"/><rect x="660" y="318" width="22" height="24" rx="3" fill="#e9e1d0" opacity=".85"/>
+<ellipse cx="600" cy="440" rx="320" ry="34" fill="#ffe2a0" opacity=".06"/>
+<rect width="1200" height="510" fill="url(#vig)"/></svg>`; },
+  boardroom(){ const r=rng(23);
+    return `<svg viewBox="0 0 1200 510" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="해 질 녘 고층 회의실 창가 테이블 양 끝에 앉은 두 사람">
+<defs><linearGradient id="skyC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2850"/><stop offset=".55" stop-color="#8c4e66"/><stop offset="1" stop-color="#f2a65e"/></linearGradient>
+<linearGradient id="tblC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2d26"/><stop offset="1" stop-color="#140f0c"/></linearGradient>
+<clipPath id="winC"><rect x="70" y="40" width="1060" height="300"/></clipPath>${VIG}</defs>
+<rect width="1200" height="510" fill="#101218"/>
+<g clip-path="url(#winC)"><rect x="70" y="40" width="1060" height="300" fill="url(#skyC)"/><circle cx="760" cy="318" r="46" fill="#ffd08a" opacity=".9"/>
+${skyline(r,{y:342,minH:40,maxH:170,minW:30,maxW:80,fill:'#3a2440',win:'#ffcf7a',winP:.05,x0:70,x1:1130})}
+${skyline(r,{y:342,minH:20,maxH:90,minW:50,maxW:110,fill:'#24172b',x0:70,x1:1130})}</g>
+${[70,282,494,706,918,1124].map(x=>`<rect x="${x}" y="36" width="8" height="308" fill="#0a0b0f"/>`).join('')}
+<rect x="66" y="36" width="1070" height="8" fill="#0a0b0f"/><rect x="66" y="336" width="1070" height="8" fill="#0a0b0f"/>
+${seated(300,400,1.3,'#06070a')}
+${seated(905,400,1.3,'#06070a')}
+<polygon points="380,372 820,372 1120,510 80,510" fill="url(#tblC)"/><polygon points="380,372 820,372 830,378 370,378" fill="#f2a65e" opacity=".35"/>
+<polygon points="560,372 660,372 760,510 440,510" fill="#f2a65e" opacity=".05"/>
+<rect width="1200" height="510" fill="url(#vig)"/></svg>`; }
+};
+
+/* ===================== SPEECH ===================== */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+const HAS_TTS = 'speechSynthesis' in window;
+let VOICES=[];
+const FEM=/Samantha|Victoria|Karen|Moira|Tessa|Fiona|Zira|Aria|Jenny|Female|Susan|Allison|Ava|Serena|Joanna|Salli|Kendra|Libby|Sonia|Google US English|Google UK English Female/i;
+const MAL=/Daniel|Alex|Fred|David|Mark|Guy|Male|Tom|Aaron|Rishi|Arthur|Matthew|Joey|Ryan|Christopher|Eric|Google UK English Male/i;
+function loadVoices(){ if(!HAS_TTS) return; const vs=speechSynthesis.getVoices().filter(v=>/^en[-_]/i.test(v.lang));
+  const sc=v=>(/en[-_]US/i.test(v.lang)?3:0)+(/en[-_]GB/i.test(v.lang)?2:0)+(/Natural|Google|Neural|Premium|Enhanced/i.test(v.name)?2:0);
+  VOICES=vs.sort((a,b)=>sc(b)-sc(a)); }
+if(HAS_TTS){ loadVoices(); speechSynthesis.onvoiceschanged=loadVoices; }
+function voiceFor(role, idx){
+  if(!VOICES.length) return null;
+  const re = role.g==='f' ? FEM : MAL;
+  const other = role.g==='f' ? MAL : FEM;
+  let list=VOICES.filter(v=>re.test(v.name) && !(role.g==='f' && MAL.test(v.name) && !FEM.test(v.name)));
+  if(!list.length) list=VOICES.filter(v=>!other.test(v.name));
+  if(!list.length) list=VOICES;
+  return list[idx % list.length];
+}
+function speak(text, o={}){
+  return new Promise(res=>{
+    const words=text.split(/\s+/).length;
+    if(!HAS_TTS){ setTimeout(res, 600+words*380); return; }
+    try{
+      speechSynthesis.cancel();
+      const u=new SpeechSynthesisUtterance(text); u.lang='en-US';
+      if(o.voice) u.voice=o.voice; u.pitch=o.pitch||1; u.rate=o.rate||S.rate;
+      let done=false; const fin=()=>{ if(done) return; done=true; clearTimeout(t); res(); };
+      u.onend=fin; u.onerror=fin;
+      const t=setTimeout(fin, 3000+words*650/u.rate);
+      speechSynthesis.speak(u);
+    }catch(e){ res(); }
+  });
+}
+function speakLine(ln, rateMul=1){ const sc=S.scene; const role=sc.roles[ln.r]; return speak(ln.text,{voice:voiceFor(role,ln.r), pitch:role.pitch, rate:S.rate*rateMul}); }
+function stopSpeech(){ if(HAS_TTS) try{ speechSynthesis.cancel(); }catch(e){} }
+
+let rec=null;
+function stopRec(){ if(rec){ try{ rec.abort(); }catch(e){} rec=null; } S.listening=false; }
+function listen(onDone, liveEl){
+  if(!SR){ toast('이 브라우저는 음성 인식을 지원하지 않아요. 입력칸을 써 주세요.'); return; }
+  if(S.listening){ try{ rec&&rec.stop(); }catch(e){} return; }
+  stopSpeech();
+  const r=new SR(); rec=r; r.lang='en-US'; r.interimResults=true; r.maxAlternatives=4; r.continuous=false;
+  let alts=null, interim='', sent=false;
+  r.onresult=e=>{ let txt=''; for(let i=0;i<e.results.length;i++) txt+=e.results[i][0].transcript;
+    interim=txt; const el=liveEl&&liveEl(); if(el) el.textContent='들리는 말: '+txt;
+    const all=Array.from(e.results); if(all.length && all.every(x=>x.isFinal)){
+      if(all.length===1) alts=Array.from(all[0]).map(a=>a.transcript); else alts=[txt]; } };
+  r.onerror=e=>{ S.listening=false; if(e.error==='not-allowed'||e.error==='service-not-allowed'||e.error==='audio-capture'){ S.micBlocked=true; sent=true; onDone(null,'blocked'); }
+    else if(e.error==='no-speech'){ sent=true; onDone(null,'nospeech'); } };
+  r.onend=()=>{ S.listening=false; rec=null; if(sent) return; sent=true; if(alts||interim) onDone(alts||[interim]); else onDone(null,'nospeech'); };
+  try{ r.start(); S.listening=true; }catch(e){ S.listening=false; S.micBlocked=true; onDone(null,'blocked'); }
+}
+
+/* ===================== AI (Claude) ===================== */
+let samplePromise=null;
+const IN_FRAME = (()=>{ try{ return window.self!==window.top; }catch(e){ return true; } })();
+function getSample(){ if(!samplePromise){ samplePromise=(async()=>{ if(!IN_FRAME) return null; for(let i=0;i<20;i++){ if(window.claude && typeof window.claude.use==='function'){ try{ return await window.claude.use('sample'); }catch(e){ return null; } } await new Promise(r=>setTimeout(r,200)); } return null; })(); } return samplePromise; }
+let SAMPLE=null;
+const apiKey=()=>store.get('apikey','');
+const aiReady=()=>!!SAMPLE || (!IN_FRAME && !!apiKey());
+async function aiAsk(input, o={}){
+  if(SAMPLE){ const r=await SAMPLE(input,{modelTier:o.tier||'default', cache:false, onText:o.onText}); return r.text; }
+  const key=apiKey(); if(!key) throw {code:'no_key'};
+  const messages = typeof input==='string' ? [{role:'user',content:input}] : input;
+  let res;
+  try{
+    res = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
+      headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:store.get('model','claude-haiku-5-5'), max_tokens:o.max||700, messages})});
+  }catch(e){ throw {code:'network'}; }
+  if(!res.ok){ let msg=''; try{ const j=await res.json(); msg=(j.error&&j.error.message)||''; }catch(e){}
+    throw {code: res.status===401?'bad_key': res.status===429?'rate_limited': /credit|balance|billing/i.test(msg)?'no_credit':'http', message:msg, status:res.status}; }
+  const j=await res.json(); const text=(j.content||[]).filter(c=>c.type==='text').map(c=>c.text).join('');
+  if(o.onText) o.onText({text}); return text;
+}
+function aiErr(e){ const c=e&&e.code;
+  return c==='rate_limited'?'요청이 많아요. 잠시 후 다시 시도해 주세요.'
+    : c==='not_granted'?'AI 사용이 허용되지 않았어요.'
+    : c==='no_key'?'설정에서 API 키를 먼저 넣어 주세요.'
+    : c==='bad_key'?'API 키가 올바르지 않아요. 설정에서 다시 넣어 주세요.'
+    : c==='no_credit'?'API 크레딧이 부족해요. Claude Console의 Billing 페이지에서 크레딧을 확인해 주세요.'
+    : c==='network'?'인터넷 연결을 확인해 주세요.'
+    : '응답을 받지 못했어요'+(e&&e.message?` (${e.message})`:'')+'. 다시 시도해 주세요.'; }
+
+/* ===================== STATE ===================== */
+const S={ scene:null, role:0, stage:1, rate:store.get('rate',0.92), idx:0, run:0, phase:'idle', reveal:false, hint:0, attempt:null, results:[], listening:false, micBlocked:false, ai:false, coach:'' };
+const inFrame=IN_FRAME;
+let saved=store.get('words',{});
+let progress=store.get('progress',{});
+const cur=()=>S.scene && S.scene.lines[S.idx];
+
+/* ===================== VIEWS ===================== */
+function show(view){
+  ['vHome','vPlay','vChat','vWords','vSet'].forEach(id=>$('#'+id).hidden = id!==view);
+  $('#navHome').setAttribute('aria-current', String(view==='vHome'||view==='vPlay'||view==='vChat'));
+  $('#navWords').setAttribute('aria-current', String(view==='vWords'));
+  $('#navSet').setAttribute('aria-current', String(view==='vSet'));
+  window.scrollTo(0,0);
+}
+function renderHome(){
+  $('#cards').innerHTML = SCENES.map(sc=>{
+    const pips=[1,2,3].map(st=>{ const v=progress[sc.id+':'+st]; return `<span class="pip ${v>=80?'done':''}">${st}단계 ${v!=null?v+'점':'–'}</span>`; }).join('');
+    return `<button class="card" data-act="open" data-id="${sc.id}">
+      <div class="thumb">${ART[sc.art]()}</div>
+      <div class="body"><div class="tags"><span class="tag">${esc(sc.genre)}</span><span class="tag">${esc(sc.level)}</span><span class="tag">대사 ${sc.lines.length}줄 · 단어 ${sc.vocab.length}개</span></div>
+      <h3>${esc(sc.title)}</h3><div class="ko">${esc(sc.ko)} — ${esc(sc.roles[0].ko)} / ${esc(sc.roles[1].ko)}</div>
+      <div class="pips">${pips}</div></div></button>`; }).join('');
+  const mic = SR ? (inFrame ? '<b>마이크:</b> Claude 화면 안에서는 브라우저가 마이크를 막을 수 있어요. 그럴 땐 입력칸에 타이핑해서 연습하고, 말하기 연습은 설치한 앱(내 주소)에서 하세요.' : '<b>마이크:</b> 말하기 버튼을 누르고 대사를 말하면 정확도를 채점해요. 처음 한 번 마이크 권한을 허용해 주세요.')
+                 : '<b>마이크:</b> 이 브라우저는 음성 인식을 지원하지 않아요. PC나 안드로이드의 Chrome을 권장해요. 입력칸으로도 연습할 수 있어요.';
+  const ai = aiReady() ? '<b>AI 기능:</b> 내 대답에 대한 코치 피드백과 장면 속 자유 대화를 쓸 수 있어요.' : (IN_FRAME ? '<b>AI 기능:</b> 허용 창이 뜨면 허용해 주세요.' : '<b>AI 기능:</b> <a href="#" data-act="settings" style="color:var(--sub)">설정</a>에서 Claude API 키를 넣으면 AI 코치와 자유 대화를 쓸 수 있어요.');
+  $('#envNote').innerHTML = `<div>${mic}</div><div>${ai}</div><div><b>음성:</b> ${HAS_TTS?'상대 대사는 기기에 설치된 영어 음성으로 읽어요. 기기마다 목소리가 달라요.':'이 브라우저는 음성 출력을 지원하지 않아요.'}</div>`;
+  $('#wcount').textContent = Object.keys(saved).length;
+}
+function openScene(id){
+  const sc=SCENES.find(s=>s.id===id); if(!sc) return;
+  resetRun(); S.scene=sc; S.role=store.get('role:'+id,0); S.stage=store.get('stage:'+id,1);
+  $('#pTitle').textContent=sc.title;
+  $('#pMeta').textContent=`${sc.ko} · ${sc.genre} · ${sc.level}`;
+  $('#art').innerHTML=ART[sc.art]();
+  $('#roleSeg').innerHTML=sc.roles.map((r,i)=>`<button data-role="${i}">${esc(r.ko)}</button>`).join('');
+  renderChips(); renderScript(); renderSegs(); renderSubtitle(); renderTurn();
+  $('#scriptBox').open = S.stage===1;
+  show('vPlay');
+}
+function renderSegs(){
+  document.querySelectorAll('#roleSeg button').forEach(b=>b.setAttribute('aria-pressed', String(+b.dataset.role===S.role)));
+  document.querySelectorAll('#stageSeg button').forEach(b=>b.setAttribute('aria-pressed', String(+b.dataset.stage===S.stage)));
+  document.querySelectorAll('#rateSeg button').forEach(b=>b.setAttribute('aria-pressed', String(+b.dataset.rate===S.rate)));
+  const ai=$('#chatBtn'); ai.disabled=!aiReady(); ai.title = aiReady() ? '' : '설정에서 API 키를 넣으면 쓸 수 있어요';
+}
+function renderChips(){
+  const sc=S.scene; $('#vcount').textContent=`${sc.vocab.length}개`;
+  $('#chips').innerHTML=sc.vocab.map(k=>`<button class="chip ${saved[k]?'saved':''}" data-k="${esc(k)}">${esc(k)}<small>${esc(VOCAB[k].ko.split(/[,(·]/)[0].trim())}</small></button>`).join('');
+}
+function renderScript(){
+  const sc=S.scene;
+  $('#script').innerHTML=sc.lines.map((ln,i)=>`<li class="${(S.phase!=='idle'&&S.phase!=='done'&&i===S.idx)?'cur':''}"><span class="s">${esc(sc.roles[ln.r].name)}${ln.r===S.role?' (나)':''}</span><div>${enHTML(ln)}</div><span class="k">${esc(ln.ko)}</span></li>`).join('');
+}
+function renderSubtitle(){
+  const sc=S.scene, ln=cur(), box=$('#subtitle');
+  const active = S.phase==='partner'||S.phase==='mine'||S.phase==='result';
+  $('#lineNo').textContent = active ? `${S.idx+1} / ${sc.lines.length}` : `${S.stage}단계`;
+  if(!active){
+    box.innerHTML=`<div class="sp">${S.phase==='done'?'END':'SCENE'}</div><div class="en">${esc(sc.place)}</div><div class="kor">${esc(sc.placeKo)}</div>`; return; }
+  const mine=ln.r===S.role;
+  let showEN, showKO;
+  if(S.reveal||S.phase==='result'){ showEN=true; showKO=true; }
+  else if(S.stage===1){ showEN=true; showKO=true; }
+  else if(S.stage===2){ showEN=false; showKO=true; }
+  else { showEN=false; showKO=false; }
+  let h=`<div class="sp">${mine?'<span class="you">YOU · </span>':''}${esc(sc.roles[ln.r].name)}</div>`;
+  if(showEN) h+=`<div class="en">${enHTML(ln)}</div>`;
+  if(showKO) h+=`<div class="kor">${esc(ln.ko)}</div>`;
+  if(!showEN && !showKO) h+=`<div class="ghost">${mine?'(당신 차례: 기억나는 대로 말해 보세요)':'(자막 없음: 귀로 듣고 이해해 보세요)'}</div>`;
+  if(!showEN && mine && S.hint===1) h+=`<div class="hintline">${esc(firstLetters(ln.text))}</div>`;
+  box.innerHTML=h;
+}
+function firstLetters(t){ return t.split(' ').map(w=>w.replace(/[A-Za-z]+/g, m=>m[0]+'_'.repeat(m.length-1))).join('  '); }
+function scoreCls(v){ return v>=85?'g':v>=60?'w':'b'; }
+
+function renderTurn(){
+  const sc=S.scene, t=$('#turn'), ln=cur();
+  t.className='turn';
+  if(S.phase==='idle'){
+    const me=sc.roles[S.role];
+    t.innerHTML=`<div class="turn-head"><div class="who">${S.stage}단계 · ${['','영어+한글 자막 보며 따라 말하기','한글 자막만 보고 영어로 말하기','자막 없이 듣고 말하기'][S.stage]}</div></div>
+      <p style="margin:0">당신은 <b style="color:var(--you)">${esc(me.ko)}</b> 역할이에요. 상대 대사는 음성으로 나오고, 내 차례가 오면 대사를 말하거나 입력하면 됩니다.</p>
+      <div class="btns"><button class="btn primary" data-act="start">▶ 장면 시작</button></div>`;
+    return;
+  }
+  if(S.phase==='partner'){
+    t.innerHTML=`<div class="turn-head"><div class="who">${esc(sc.roles[ln.r].name)} <small>${esc(sc.roles[ln.r].ko)} · 말하는 중</small></div><span class="small">${S.idx+1} / ${sc.lines.length}</span></div>
+      <div class="btns"><button class="btn" data-act="replay">다시 듣기</button><button class="btn" data-act="slow">천천히 듣기</button>${S.stage>1&&!S.reveal?'<button class="btn" data-act="peek">자막 잠깐 보기</button>':''}<button class="btn primary" data-act="next">다음 ▶</button><button class="btn" data-act="stop">■ 처음으로</button></div>`;
+    return;
+  }
+  if(S.phase==='mine' || S.phase==='result'){
+    t.className='turn mine';
+    const a=S.attempt;
+    let res='';
+    if(S.phase==='result' && a){
+      const tips=[];
+      a.gaps.slice(0,4).forEach(g=>{ if(g.h.length) tips.push(a.mode==='voice' ? `<b>${esc(g.t.join(' '))}</b> → "${esc(g.h.join(' '))}"(으)로 들렸어요` : `<b>${esc(g.t.join(' '))}</b> 자리에 "${esc(g.h.join(' '))}"라고 썼어요`);
+        else tips.push(`<b>${esc(g.t.join(' '))}</b> ${a.mode==='voice'?'가 빠졌거나 인식되지 않았어요':'가 빠졌어요'}`); });
+      a.pairs.slice(0,3).forEach(p=>tips.push(`<b>${esc(p.t)}</b> ≈ "${esc(p.h)}" 거의 맞아요. ${a.mode==='voice'?'끝소리까지 또렷하게 말해 보세요':'철자를 확인해 보세요'}`));
+      const msg = a.score>=90?'완벽해요!':a.score>=75?'좋아요, 거의 다 왔어요.':a.score>=50?'절반 넘게 맞았어요. 한 번 더!':'다시 들어 보고 천천히 말해 봐요.';
+      res=`<div class="result">
+        <div class="scorebox"><div class="score ${scoreCls(a.score)}">${a.score}</div><div><div><b>${msg}</b></div><div class="small">${a.mode==='voice'?'인식된 문장':'입력한 문장'}: "${esc(a.heard)}"</div></div></div>
+        <div class="sent">${a.words.map((w,i)=>`<span class="w-${a.wstat[i]}">${esc(w)}</span>`).join(' ')}</div>
+        ${tips.length?`<ul class="tips">${tips.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+        ${S.coach?`<div class="coach" id="coachBox">${esc(S.coach)}</div>`:''}
+      </div>`;
+    }
+    const prompt = S.stage===1 ? '화면의 영어 자막을 소리 내어 말해 보세요.' : S.stage===2 ? '한글 자막을 보고 영어 대사를 말해 보세요.' : '앞의 대화를 떠올리며 내 대사를 말해 보세요.';
+    const micUI = SR ? `<button class="mic ${S.listening?'on':''}" data-act="mic" aria-label="말하기">${S.listening?'듣는 중…<br>■':'말하기'}</button>` : '';
+    const micNote = S.micBlocked ? `<div class="small warn">${inFrame?'이 화면에서는 마이크가 막혀 있어요. 입력칸에 타이핑하거나, 설치한 앱(내 주소)에서 말해 보세요.':'마이크 권한이 꺼져 있어요. 주소창 왼쪽의 권한 설정에서 마이크를 허용해 주세요.'}</div>` : '';
+    t.innerHTML=`<div class="turn-head"><div class="who you">당신 차례 · ${esc(sc.roles[ln.r].name)}</div><span class="small">${S.idx+1} / ${sc.lines.length}</span></div>
+      ${res}
+      <div class="small">${S.phase==='result'?'다시 해 보거나 다음 대사로 넘어가세요.':prompt}</div>
+      <div class="say">${micUI}<div style="display:grid;gap:8px">
+        <form class="typebox" id="typeForm"><label for="typed" hidden>영어 대사 입력</label><input id="typed" autocomplete="off" placeholder="말하기 대신 영어로 입력해도 돼요"><button class="btn" type="submit">확인</button></form>
+        <div class="live" id="live"></div>${micNote}</div></div>
+      <div class="btns">
+        ${S.stage>1&&!S.reveal?`<button class="btn" data-act="hint">${S.hint?'정답 자막 보기':'힌트 (첫 글자)'}</button>`:''}
+        <button class="btn" data-act="model">정답 듣기</button>
+        ${S.phase==='result'&&aiReady()?'<button class="btn" data-act="coach">AI 코치 피드백</button>':''}
+        <button class="btn ${S.phase==='result'?'primary':''}" data-act="next">${S.phase==='result'?'다음 ▶':'건너뛰기'}</button>
+        <button class="btn" data-act="stop">■ 처음으로</button>
+      </div>`;
+    $('#typeForm').addEventListener('submit', e=>{ e.preventDefault(); const v=$('#typed').value.trim(); if(v) submitAttempt([v],'type'); });
+    return;
+  }
+  if(S.phase==='done'){
+    const mine=sc.lines.map((ln,i)=>({ln,i})).filter(x=>x.ln.r===S.role);
+    const scores=mine.map(x=>S.results[x.i]||0); const avg=Math.round(scores.reduce((a,b)=>a+b,0)/Math.max(1,scores.length));
+    t.innerHTML=`<div class="summary">
+      <div class="scorebox"><div class="score ${scoreCls(avg)}">${avg}</div><div><b>${S.stage}단계 완료</b><div class="small">내 대사 ${mine.length}개 평균 점수${avg>=80?' · 다음 단계로 가도 좋아요':' · 80점이 넘으면 다음 단계를 추천해요'}</div></div></div>
+      <ol>${mine.map(x=>`<li><span class="num" style="color:var(--${(S.results[x.i]||0)>=85?'good':(S.results[x.i]||0)>=60?'warn':'bad'})">${S.results[x.i]||0}</span> · ${esc(x.ln.text)}</li>`).join('')}</ol>
+      <div class="btns"><button class="btn" data-act="start">같은 단계 다시</button>${S.stage<3?'<button class="btn primary" data-act="nextstage">다음 단계로 ▶</button>':''}<button class="btn" data-act="swap">역할 바꿔서 하기</button>${aiReady()?'<button class="btn" data-act="chat">AI와 자유 대화</button>':''}</div></div>`;
+  }
+}
+
+/* ===================== FLOW ===================== */
+function resetRun(){ S.run++; stopSpeech(); stopRec(); S.idx=0; S.phase='idle'; S.results=[]; S.reveal=false; S.hint=0; S.attempt=null; S.coach=''; }
+function start(){ resetRun(); if(S.stage>1) $('#scriptBox').open=false; step(); }
+function step(){
+  const sc=S.scene;
+  if(S.idx>=sc.lines.length) return finish();
+  const ln=cur(); S.reveal=false; S.hint=0; S.attempt=null; S.coach='';
+  if(ln.r!==S.role){
+    S.phase='partner'; renderSubtitle(); renderTurn(); renderScript();
+    const my=++S.run;
+    speakLine(ln).then(()=>{ if(my!==S.run) return; setTimeout(()=>{ if(my===S.run && S.phase==='partner'){ S.idx++; step(); } }, 650); });
+  } else {
+    S.phase='mine'; S.run++; renderSubtitle(); renderTurn(); renderScript();
+  }
+}
+function next(){ S.run++; stopSpeech(); stopRec(); S.idx++; step(); }
+function finish(){
+  S.run++; S.phase='done';
+  const sc=S.scene; const mine=sc.lines.map((ln,i)=>i).filter(i=>sc.lines[i].r===S.role);
+  const avg=Math.round(mine.reduce((a,i)=>a+(S.results[i]||0),0)/Math.max(1,mine.length));
+  const key=sc.id+':'+S.stage; if(progress[key]==null||avg>progress[key]){ progress[key]=avg; store.set('progress',progress); }
+  renderSubtitle(); renderTurn(); renderScript();
+}
+function submitAttempt(alts, mode){
+  const ln=cur(); const r=evaluate(ln.text, alts); if(!r) return;
+  S.attempt={...r, mode}; S.coach=''; S.phase='result';
+  S.results[S.idx]=Math.max(S.results[S.idx]||0, r.score);
+  renderSubtitle(); renderTurn();
+}
+function doMic(){
+  if(S.listening){ try{ rec&&rec.stop(); }catch(e){} return; }
+  listen((alts,err)=>{
+    if(err==='blocked'){ renderTurn(); return; }
+    if(err==='nospeech'||!alts){ renderTurn(); const l=$('#live'); if(l) l.textContent='소리가 들리지 않았어요. 마이크 가까이에서 다시 말해 보세요.'; return; }
+    submitAttempt(alts,'voice');
+  }, ()=>$('#live'));
+  renderTurn();
+}
+async function doCoach(){
+  if(!aiReady()){ toast(aiErr({code:'no_key'})); return; }
+  const sc=S.scene, ln=cur(), a=S.attempt; if(!a) return;
+  S.coach='코치가 살펴보는 중…'; renderTurn();
+  const prompt=`You are a warm, practical English speaking coach for a Korean adult learner (intermediate; practicing conversation and TOEIC).
+Scene: ${sc.setting}
+Target line (${sc.roles[ln.r].name}): "${ln.text}"
+Korean meaning: "${ln.ko}"
+Practice stage: ${['','reading subtitles aloud','speaking from Korean subtitles only','speaking with no subtitles'][S.stage]}
+The learner ${a.mode==='voice'?'spoke, and browser speech recognition heard':'typed'}: "${a.heard}"
+Word match score: ${a.score}/100.
+Write feedback in Korean, at most 6 short lines, plain text with no markdown symbols:
+1. 잘한 점 한 줄
+2. ${a.mode==='voice'?'인식 결과로 짐작되는 발음 포인트 (구체적으로: 어떤 소리를 입 모양·혀 위치로 어떻게 내는지. 예: r/l, th, f/p, 끝 자음, 강세)':'틀린 부분과 이유 (문법이면 짧게 설명)'}
+3. 이 대사를 자연스럽게 말하는 연음·강세 팁 한 가지 (예: "need to" → 니러)
+4. 같은 상황에서 쓸 수 있는 다른 자연스러운 표현 1개 (영어 + 한국어 뜻)
+If the speech recognition text looks perfect, say so briefly and focus on rhythm and stress.`;
+  try{
+    S.coach=await aiAsk(prompt,{tier:'quick', onText:({text})=>{ S.coach=text; const b=$('#coachBox'); if(b) b.textContent=text; }});
+  }catch(e){ S.coach = aiErr(e); }
+  renderTurn();
+}
+
+/* ===================== CHAT ===================== */
+const C={msgs:[], items:[], busy:false, sub:store.get('csub','both'), revealed:{}};
+function chatSystem(){
+  const sc=S.scene, me=sc.roles[S.role], ai=sc.roles[1-S.role];
+  return `You are running a spoken English role-play for a Korean adult learner (intermediate).
+Scene: ${sc.setting}
+You play: ${ai.name}, ${ai.desc}. The learner plays: ${me.name}.
+Rules: stay in character and improvise naturally beyond any script. Keep each reply to 1-2 short sentences at CEFR B1-B2 level, and usually end with something the learner can answer (often a question). Keep it PG-13.
+Every turn, return ONLY one JSON object, no other text:
+{"reply":"<your in-character English line>","reply_ko":"<natural Korean translation>","feedback":"<Korean, one short sentence about the learner's last English line (grammar or naturalness); empty string on your opening line or if it was already natural>","better":"<a more natural English version of the learner's last line, or empty string>"}`;
+}
+function parseJSON(t){ try{ const m=t.match(/\{[\s\S]*\}/); return m?JSON.parse(m[0]):null; }catch(e){ return null; } }
+async function openChat(){
+  if(!aiReady()){ toast(aiErr({code:'no_key'})); return; }
+  resetRun(); renderTurn(); renderSubtitle();
+  const sc=S.scene; $('#cTitle').textContent=sc.title; $('#cMeta').textContent=`당신: ${sc.roles[S.role].ko} · AI: ${sc.roles[1-S.role].ko}`;
+  $('#chatMic').hidden=!SR;
+  renderCsub(); show('vChat');
+  if(!C.items.length || C.scene!==sc.id+':'+S.role) restartChat();
+  else renderChat();
+}
+function restartChat(){ C.scene=S.scene.id+':'+S.role; C.items=[]; C.revealed={}; C.msgs=[{role:'user', content: chatSystem()+'\n\nStart the scene now with your opening line.'}]; renderChat(); callAI(); }
+async function callAI(){
+  C.busy=true; renderChat();
+  try{
+    const text=await aiAsk(C.msgs,{max:500});
+    const j=parseJSON(text)||{reply:text.trim(), reply_ko:'', feedback:'', better:''};
+    C.msgs.push({role:'assistant', content:text});
+    const last=C.items[C.items.length-1]; if(last&&last.who==='me'){ last.feedback=j.feedback||''; last.better=j.better||''; }
+    C.items.push({who:'ai', en:j.reply||'', ko:j.reply_ko||''});
+    C.busy=false; renderChat();
+    const ai=S.scene.roles[1-S.role]; speak(j.reply||'',{voice:voiceFor(ai,1-S.role), pitch:ai.pitch});
+  }catch(e){ C.busy=false; C.items.push({who:'sys', en: aiErr(e)}); if(C.msgs[C.msgs.length-1].role==='user' && C.msgs.length>1){ C.msgs.pop(); } renderChat(); }
+}
+function sendChat(text){
+  if(C.busy||!text.trim()) return;
+  C.items.push({who:'me', en:text.trim()});
+  C.msgs.push({role:'user', content:`The learner (${S.scene.roles[S.role].name}) says: "${text.trim()}"\nReply in character with the JSON object only.`});
+  $('#chatInput').value=''; callAI();
+}
+function renderCsub(){ document.querySelectorAll('#csubSeg button').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.csub===C.sub))); }
+function renderChat(){
+  const sc=S.scene; const ai=sc.roles[1-S.role], me=sc.roles[S.role];
+  $('#msgs').innerHTML = C.items.map((it,i)=>{
+    if(it.who==='sys') return `<div class="small warn">${esc(it.en)}</div>`;
+    if(it.who==='me') return `<div class="msg me"><span class="nm">${esc(me.name)} (나)</span><div class="e">${esc(it.en)}</div>${it.feedback?`<div class="fb">${esc(it.feedback)}</div>`:''}${it.better?`<div class="bt">더 자연스럽게: ${esc(it.better)}</div>`:''}</div>`;
+    const blur = C.sub==='none' && !C.revealed[i];
+    return `<div class="msg ai"><span class="nm">${esc(ai.name)}</span><div class="e ${blur?'blur':''}" data-act="reveal" data-i="${i}" title="${blur?'눌러서 자막 보기':''}">${esc(it.en)}</div>${C.sub==='both'||C.revealed[i]?`<div class="k">${esc(it.ko)}</div>`:''}<button class="mini" data-act="say" data-i="${i}">다시 듣기</button></div>`;
+  }).join('') + (C.busy?`<div class="typing">${esc(ai.name)}이(가) 대답을 생각하는 중…</div>`:'');
+  const m=$('#chatMic'); if(m){ m.classList.toggle('on',S.listening); m.innerHTML=S.listening?'듣는 중…<br>■':'말하기'; }
+}
+
+/* ===================== WORDS ===================== */
+function renderWords(){
+  const keys=Object.keys(saved).sort((a,b)=>saved[b]-saved[a]); const hide=$('#hideMean').checked;
+  $('#wcount').textContent=keys.length;
+  $('#wlist').innerHTML = keys.length ? keys.map(k=>{ const v=VOCAB[k]; if(!v) return ''; const ex=exampleFor(k);
+    return `<div class="wrow"><div><div class="w">${esc(k)}<span class="i">${esc(v.ipa)}</span></div><div class="m ${hide?'hide':''}" data-act="unblur">${esc(v.ko)}</div>${ex?`<div class="x">${esc(ex.text)}</div>`:''}</div>
+      <div class="btns"><button class="btn" data-act="say-word" data-k="${esc(k)}">듣기</button><button class="btn" data-act="del-word" data-k="${esc(k)}">삭제</button></div></div>`; }).join('')
+    : `<div class="empty">아직 저장한 단어가 없어요. 장면에서 점선 단어를 누르고 <b>단어장에 추가</b>를 눌러 보세요.</div>`;
+}
+
+/* ===================== SHEET ===================== */
+let sheetKey=null;
+function openSheet(k){ const v=VOCAB[k]; if(!v) return; sheetKey=k;
+  $('#shWord').textContent=k; $('#shIpa').textContent=v.ipa; $('#shKo').textContent=v.ko;
+  const ex=exampleFor(k); $('#shEx').textContent= ex ? `예문: ${ex.text}  (${ex.ko})` : '';
+  $('#shSave').textContent= saved[k] ? '단어장에서 빼기' : '단어장에 추가';
+  $('#sheet').hidden=false; }
+
+/* ===================== EVENTS ===================== */
+document.addEventListener('click', e=>{
+  const k=e.target.closest('[data-k]');
+  const a=e.target.closest('[data-act]');
+  if(k && !a){ openSheet(k.dataset.k); return; }
+  if(!a){
+    if(e.target.closest('[data-role]')){ S.role=+e.target.closest('[data-role]').dataset.role; store.set('role:'+S.scene.id,S.role); resetRun(); renderSegs(); renderSubtitle(); renderTurn(); renderScript(); }
+    else if(e.target.closest('[data-stage]')){ S.stage=+e.target.closest('[data-stage]').dataset.stage; store.set('stage:'+S.scene.id,S.stage); resetRun(); $('#scriptBox').open=S.stage===1; renderSegs(); renderSubtitle(); renderTurn(); renderScript(); }
+    else if(e.target.closest('[data-rate]')){ S.rate=+e.target.closest('[data-rate]').dataset.rate; store.set('rate',S.rate); renderSegs(); speak('This is my speaking speed.',{rate:S.rate}); }
+    else if(e.target.closest('[data-csub]')){ C.sub=e.target.closest('[data-csub]').dataset.csub; store.set('csub',C.sub); C.revealed={}; renderCsub(); renderChat(); }
+    return;
+  }
+  const act=a.dataset.act;
+  switch(act){
+    case 'home': resetRun(); renderHome(); show('vHome'); break;
+    case 'words': resetRun(); renderWords(); show('vWords'); break;
+    case 'open': openScene(a.dataset.id); break;
+    case 'start': start(); break;
+    case 'next': next(); break;
+    case 'stop': resetRun(); renderSubtitle(); renderTurn(); renderScript(); break;
+    case 'replay': S.run++; { const my=S.run; speakLine(cur()).then(()=>{ if(my===S.run&&S.phase==='partner') setTimeout(()=>{ if(my===S.run&&S.phase==='partner'){ S.idx++; step(); } },650); }); } break;
+    case 'slow': S.run++; { const my=S.run; speakLine(cur(),0.7).then(()=>{ if(my===S.run&&S.phase==='partner') setTimeout(()=>{ if(my===S.run&&S.phase==='partner'){ S.idx++; step(); } },650); }); } break;
+    case 'peek': S.reveal=true; renderSubtitle(); renderTurn(); break;
+    case 'hint': if(S.hint===0){ S.hint=1; } else { S.reveal=true; } renderSubtitle(); renderTurn(); break;
+    case 'model': speakLine(cur()); break;
+    case 'mic': doMic(); break;
+    case 'coach': doCoach(); break;
+    case 'nextstage': S.stage=Math.min(3,S.stage+1); store.set('stage:'+S.scene.id,S.stage); renderSegs(); $('#scriptBox').open=false; start(); break;
+    case 'swap': S.role=1-S.role; store.set('role:'+S.scene.id,S.role); renderSegs(); resetRun(); renderSubtitle(); renderTurn(); renderScript(); break;
+    case 'chat': openChat(); break;
+    case 'back-play': stopSpeech(); stopRec(); show('vPlay'); renderTurn(); break;
+    case 'chat-restart': stopSpeech(); restartChat(); break;
+    case 'chat-mic': listen((alts,err)=>{ renderChat(); if(err==='blocked'){ toast(inFrame?'이 화면에서는 마이크가 막혀 있어요. 입력칸을 써 주세요.':'마이크 권한을 허용해 주세요.'); return; } if(alts&&alts[0]) sendChat(alts[0]); }, ()=>null); renderChat(); break;
+    case 'reveal': C.revealed[+a.dataset.i]=true; renderChat(); break;
+    case 'say': { const it=C.items[+a.dataset.i]; const ai=S.scene.roles[1-S.role]; speak(it.en,{voice:voiceFor(ai,1-S.role), pitch:ai.pitch}); } break;
+    case 'sheet-close': $('#sheet').hidden=true; break;
+    case 'sheet-speak': speak(sheetKey,{rate:0.8}); break;
+    case 'sheet-save': if(saved[sheetKey]) delete saved[sheetKey]; else saved[sheetKey]=Date.now(); store.set('words',saved); $('#shSave').textContent= saved[sheetKey]?'단어장에서 빼기':'단어장에 추가'; $('#wcount').textContent=Object.keys(saved).length; if(S.scene && !$('#vPlay').hidden) renderChips(); toast(saved[sheetKey]?'단어장에 추가했어요':'단어장에서 뺐어요'); break;
+    case 'say-word': speak(a.dataset.k,{rate:0.8}); break;
+    case 'del-word': delete saved[a.dataset.k]; store.set('words',saved); renderWords(); break;
+    case 'unblur': a.classList.remove('hide'); break;
+  }
+});
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape') $('#sheet').hidden=true;
+  if((e.key==='Enter'||e.key===' ') && e.target.classList && e.target.classList.contains('vw')){ e.preventDefault(); openSheet(e.target.dataset.k); }
+});
+$('#hideMean').addEventListener('change', renderWords);
+$('#chatForm').addEventListener('submit', e=>{ e.preventDefault(); sendChat($('#chatInput').value); });
+
+/* ===================== SETTINGS ===================== */
+let installEvt=null;
+function renderSettings(){
+  const standalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+  const items=[
+    `실행 위치: ${IN_FRAME?'Claude 화면 안 (마이크 제한, AI는 Claude 연결 사용)': standalone?'설치된 앱':'브라우저'}`,
+    `주소 보안(https): ${location.protocol==='https:'?'예':'아니요 (휴대폰 마이크는 https 주소에서만 작동)'}`,
+    `음성 인식(말하기): ${SR?'지원':'미지원 (Chrome 권장)'}`,
+    `음성 출력(듣기): ${HAS_TTS?`지원 · 영어 음성 ${VOICES.length}개`:'미지원'}`,
+    `AI: ${SAMPLE?'Claude 연결 사용 중':apiKey()?'API 키 저장됨':'API 키 없음'}`
+  ];
+  $('#envList').innerHTML=items.map(x=>`<li>${esc(x)}</li>`).join('');
+  $('#installBtn').hidden=!installEvt;
+  $('#keyBox').hidden=IN_FRAME;
+  const k=apiKey(); $('#keyStatus').textContent = k ? `저장된 키: ${k.slice(0,10)}…${k.slice(-4)}` : '저장된 키가 없어요.';
+  document.querySelectorAll('#modelSeg button').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.model===store.get('model','claude-haiku-5-5'))));
+}
+function loadScript(src){ return new Promise((res,rej)=>{ const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
+async function showQR(){
+  const k=apiKey(); if(!k){ toast('먼저 키를 저장해 주세요.'); return; }
+  try{ if(!window.QRCode) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js'); }catch(e){ toast('QR 도구를 불러오지 못했어요. 인터넷 연결을 확인해 주세요.'); return; }
+  const url=location.origin+location.pathname+'#k='+encodeURIComponent(k);
+  $('#qr').innerHTML=''; new QRCode($('#qr'),{text:url,width:220,height:220,correctLevel:QRCode.CorrectLevel.M});
+  $('#qrBox').hidden=false;
+}
+document.addEventListener('click', async e=>{
+  const a=e.target.closest('[data-act]'); const m=e.target.closest('[data-model]');
+  if(m){ store.set('model',m.dataset.model); renderSettings(); return; }
+  if(!a) return;
+  switch(a.dataset.act){
+    case 'settings': e.preventDefault(); resetRun(); renderSettings(); show('vSet'); break;
+    case 'install': if(installEvt){ installEvt.prompt(); try{ await installEvt.userChoice; }catch(_){} installEvt=null; renderSettings(); } break;
+    case 'test-voice': speak('Hello! If you can hear me, the voice is working.',{rate:S.rate}); break;
+    case 'test-mic': $('#micTest').textContent='말해 보세요… (예: Hello, my name is ...)'; listen((alts,err)=>{ $('#micTest').textContent = err==='blocked' ? '마이크가 막혀 있어요. 주소창의 권한 설정에서 마이크를 허용해 주세요.' : err ? '소리가 들리지 않았어요. 다시 눌러 보세요.' : '인식됨: '+alts[0]; }, ()=>$('#micTest')); break;
+    case 'key-del': store.set('apikey',''); $('#qrBox').hidden=true; renderSettings(); renderHome(); toast('키를 삭제했어요'); break;
+    case 'key-qr': showQR(); break;
+    case 'key-qr-close': $('#qrBox').hidden=true; $('#qr').innerHTML=''; break;
+    case 'key-test': $('#keyStatus').textContent='연결 확인 중…'; try{ const t=await aiAsk('Reply with exactly: OK',{max:10}); $('#keyStatus').textContent='연결 성공! AI 응답: '+t.trim(); }catch(err){ $('#keyStatus').textContent=aiErr(err); } break;
+  }
+});
+$('#keyForm').addEventListener('submit', e=>{ e.preventDefault(); const v=$('#keyInput').value.trim(); if(!v) return; if(!/^sk-ant-/.test(v)){ toast('sk-ant-로 시작하는 키인지 확인해 주세요.'); return; } store.set('apikey',v); $('#keyInput').value=''; renderSettings(); renderHome(); toast('키를 저장했어요. 연결 테스트를 눌러 보세요.'); });
+window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); installEvt=e; if(!$('#vSet').hidden) renderSettings(); });
+if(!IN_FRAME && location.hash.startsWith('#k=')){
+  const k=decodeURIComponent(location.hash.slice(3)); if(/^sk-ant-/.test(k)){ store.set('apikey',k); setTimeout(()=>toast('API 키를 이 기기에 저장했어요'),300); }
+  try{ history.replaceState(null,'',location.pathname); }catch(e){ location.hash=''; }
+}
+if('serviceWorker' in navigator && location.protocol==='https:' && !IN_FRAME){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
+
+/* ===================== INIT ===================== */
+renderHome();
+getSample().then(s=>{ SAMPLE=s; renderHome(); if(S.scene) { renderSegs(); renderTurn(); } });
+</script>
+</body>
+</html>
